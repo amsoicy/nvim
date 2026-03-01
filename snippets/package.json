@@ -1,0 +1,13 @@
+{
+  "name": "nvim-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "python"
+        ],
+        "path": "./python.json"
+      }
+    ]
+  }
+}

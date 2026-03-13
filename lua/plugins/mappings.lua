@@ -58,6 +58,43 @@ return {
             end,
             desc = "Compile and Run C++ with Args",
           },
+          ["<F6>"] = {
+            function()
+              vim.cmd "w"
+              local dir = vim.fn.expand "%:p:h"
+
+              -- Find CMakeLists.txt using vim.fs.find
+              local files = vim.fs.find("CMakeLists.txt", { path = dir, limit = 1 })
+              local cmake_file = files and files[1]
+
+              if not cmake_file then
+                vim.notify("No CMakeLists.txt found in " .. dir .. " or subdirs", vim.log.levels.ERROR)
+                return
+              end
+
+              -- Extract directory from full path
+              local cmake_dir = vim.fn.fnamemodify(cmake_file, ":h")
+
+              -- Prompt for executable name
+              vim.ui.input({ prompt = "Enter executable name: " }, function(exe_name)
+                if not exe_name or exe_name == "" then
+                  return
+                end
+
+                local cmd_str = string.format(
+                  'cd /d "%s" && if not exist build mkdir build && cd build && cmake .. -G "MinGW Makefiles" && cmake --build . -- -j && cd .. && .\\build\\%s.exe & pause',
+                  cmake_dir,
+                  exe_name
+                )
+
+                require("astrocore").toggle_term_cmd {
+                  cmd = cmd_str,
+                  direction = "float",
+                }
+              end)
+            end,
+            desc = "Build and Run CMake Project",
+          },
         },
         t = {
           ["<Esc><Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },

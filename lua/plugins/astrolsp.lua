@@ -39,6 +39,7 @@ return {
     servers = {
       "pyright",
       "ts_ls",
+      "marksman",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields

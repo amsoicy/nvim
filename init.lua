@@ -15,6 +15,16 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- dressings fix for avante
+local raw_select = vim.ui.select
+vim.ui.select = function(items, opts, on_choice)
+  if opts and (opts.kind == 'avante_commands' or opts.kind == 'avante_mentions') then
+    -- Force list-like behavior for Avante
+    return raw_select(vim.tbl_values(items), opts, on_choice)
+  end
+  return raw_select(items, opts, on_choice)
+end
+
 -- vim.keymap.set("n", "<F6>", ":w<CR>:!g++ -O3 % -o %< && ./%<<CR>", { noremap = true, silent = false })
 
 -- validate that lazy is available

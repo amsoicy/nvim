@@ -11,6 +11,8 @@ return {
       ensure_installed = {
         -- install language servers
         "lua-language-server",
+        "typescript-language-server",
+        "tailwindcss-language-server",
 
         -- install formatters
         "stylua",

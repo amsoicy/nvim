@@ -9,7 +9,7 @@ return {
   { import = "astrocommunity.pack.cpp" },
   {
     "ellisonleao/gruvbox.nvim",
-    priority = 1000,
+    lazy = false,
     config = function()
       require("gruvbox").setup {
         terminal_colors = true, -- add neovim terminal colors
@@ -21,7 +21,7 @@ return {
           emphasis = true,
           comments = true,
           operators = false,
-          folds = true, 
+          folds = true,
         },
         strikethrough = true,
         invert_selection = false,
@@ -34,7 +34,11 @@ return {
         dim_inactive = false,
         transparent_mode = false,
       }
-      vim.cmd "colorscheme gruvbox"
     end,
+  },
+  {
+    "dgox16/oldworld.nvim",
+    lazy = false,
+    priority = 1000,
   },
 }

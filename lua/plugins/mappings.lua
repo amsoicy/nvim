@@ -77,9 +77,7 @@ return {
 
               -- Prompt for executable name
               vim.ui.input({ prompt = "Enter executable name: " }, function(exe_name)
-                if not exe_name or exe_name == "" then
-                  return
-                end
+                if not exe_name or exe_name == "" then return end
 
                 local cmd_str = string.format(
                   'cd /d "%s" && if not exist build mkdir build && cd build && cmake .. -G "MinGW Makefiles" && cmake --build . -- -j && cd .. && .\\build\\%s.exe & pause',
@@ -94,6 +92,22 @@ return {
               end)
             end,
             desc = "Build and Run CMake Project",
+          },
+        },
+        i = {
+          ["<CR>"] = {
+            function()
+              local cmp = require "cmp"
+              if cmp.visible() then
+                -- If menu is open, confirm selection
+                cmp.confirm { select = true }
+              else
+                -- If menu is NOT open, send a real Enter key
+                -- Using feedkeys ensures we bypass any infinite loops
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", true)
+              end
+            end,
+            desc = "Confirm completion or insert newline",
           },
         },
         t = {
